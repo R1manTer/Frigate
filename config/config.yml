@@ -1,0 +1,35 @@
+mqtt:
+  enabled: false
+
+detectors:
+  cpu:
+    type: cpu
+
+auth:
+  enabled: true
+
+cameras:
+  my_camera:
+    enabled: true
+    # Детекція повністю вимкнена для економії ресурсів
+    detect:
+      enabled: True
+      width: 640
+      height: 480
+      fps: 5
+    ffmpeg:
+      hwaccel_args: preset-intel-qsv-h264 # Використання GPU для декодування
+      inputs:
+        # - path: rtsp://ip:554/stream
+        - path: rtsp://ip:554/live1.sdp
+          roles:
+            - detect
+            - record
+    record:
+      enabled: True
+      continuous:
+           days: 3
+    objects:
+      track:
+        - person
+version: 0.17-0
